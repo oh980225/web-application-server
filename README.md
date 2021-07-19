@@ -15,8 +15,12 @@
 * 각 요구사항을 구현하는 것이 중요한 것이 아니라 구현 과정을 통해 학습한 내용을 인식하는 것이 배움에 중요하다. 
 
 ### 요구사항 1 - http://localhost:8080/index.html로 접속시 응답
-* 
+* BufferReader의 readLine() 를 쓸때는 inputStream 이 반드시 개행문자가 포함되어야 한다. 자바에서의 개행문자는 "\n" 이지만, 스트림에서의 개행문자는 "\r\n"이 개행문자이다. 따라서, 보내는쪽의 데이터 뒤에 "\r\n"을 반드시 붙여야한다.
+ [출처] : https://drawdeveloper.tistory.com/69
 
+* http 요청에 마지막은 개행문자가 없는 빈 문자열, 즉 readLine != null인 것으로 while을 돌릴 경우 문제가 생긴다.
+
+*  !"".equal(line)을 조건으로 사용해야함!
 ### 요구사항 2 - get 방식으로 회원가입
 * 
 
