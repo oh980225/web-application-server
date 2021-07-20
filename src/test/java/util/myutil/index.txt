@@ -1,0 +1,4 @@
+Get /index.html HTTP/1.1
+Host: local:8080
+Connection: keep-alive
+Accept: */*
