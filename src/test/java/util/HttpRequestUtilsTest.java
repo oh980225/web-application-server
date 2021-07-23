@@ -3,11 +3,13 @@ package util;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.junit.Test;
 
 import util.HttpRequestUtils.Pair;
+import util.myutil.RequestUtil;
 
 public class HttpRequestUtilsTest {
     @Test
