@@ -36,19 +36,28 @@ public class RequestUtil {
 
     public static byte[] getResponseBody(String url) throws IOException {
         Map<String, String> request = splitUrl(url);
+
+        return findSuitableReponse(url, request);
+    }
+
+    private static byte[] findSuitableReponse(String url, Map<String, String> request) throws IOException {
         Map<String, String> query = getQuerys(request);
 
         switch (request.get("path")) {
             case "/":
                 return getResponseByRootRequest();
-
-            case "/usr/create":
+            case "/user/create":
                 signUpUser(query);
                 return getResponseSignUp(request);
-
+            case "/users":
+                return getResponseUserList();
             default:
                 return Files.readAllBytes(new File("./webapp" + url).toPath());
         }
+    }
+
+    private static byte[] getResponseUserList() {
+        return DataBase.findAll().toString().getBytes(StandardCharsets.UTF_8);
     }
 
     private static void signUpUser(Map<String, String> query) {

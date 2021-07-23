@@ -31,7 +31,7 @@ public class RequestUtilTest {
 
     @Test
     public void splitUrl() throws IOException {
-        String path = "/usr/create";
+        String path = "/user/create";
         String params = "userId=hello1&password=hello123&name=helloMan&email=hello@mail.com";
         String url = path + "?" + params;
         byte[] response = RequestUtil.getResponseBody(url);
@@ -41,7 +41,7 @@ public class RequestUtilTest {
 
     @Test
     public void getResponseBody_GET_회원가입() throws IOException {
-        String path = "/usr/create";
+        String path = "/user/create";
         String params = "userId=hello1&password=hello123&name=helloMan&email=hello@mail.com";
         String url = path + "?" + params;
         User user = new User("hello1", "hello123", "helloMan", "hello@mail.com");
@@ -54,14 +54,14 @@ public class RequestUtilTest {
 
     @Test(expected = NullPointerException.class)
     public void 회원가입_params_empty() throws IOException {
-        String path = "/usr/create";
+        String path = "/user/create";
 
         RequestUtil.getResponseBody(path);
     }
 
     @Test(expected = NullPointerException.class)
     public void 회원가입_NULL값() throws IOException {
-        String path = "/usr/create";
+        String path = "/user/create";
         String params = "userId=hello1&password=hello123&name=&email=hello@mail.com";
         String url = path + "?" + params;
         User user = new User("hello1", "hello123", null, "hello@mail.com");
