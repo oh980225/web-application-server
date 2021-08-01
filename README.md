@@ -33,7 +33,14 @@
 
 ### 요구사항 3 - post 방식으로 회원가입
 * 요구사항 쪼개기
+1. GET요청과 POST요청을 분리한다 ✔
+2. POST요청에서 readData 메소드를 이용하여 request body를 가져온다
+3. 본문의 길이는 HTTP 헤더의 Content-Length의 값을 이용한다 ✔
+4. body를 parseQueryString 메소드를 이용해 model.User로 저장한다. 
+5. 이때 User는 인메모리에 저장한다. ✔
+6. User가 받는 모든 값은 공백일 수 없다. ✔
 
+* HTTP요청 시에 빈 요청이 들어오는 경우가 있는 것 같다.
 
 ### 요구사항 4 - redirect 방식으로 이동
 * 
