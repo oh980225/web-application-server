@@ -59,7 +59,7 @@ public class RequestUtilTest {
     public void getResponseBody() throws IOException {
         String url = "/";
         String method = "GET";
-        assertEquals("Hello My Playground!", new String(requestUtil.getResponseBody(method, url, null)));
+        assertEquals("Hello My Playground!", new String((byte [])requestUtil.getResponseBody(method, url, null).get("content")));
     }
 
     @Test

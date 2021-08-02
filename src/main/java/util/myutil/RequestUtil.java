@@ -72,23 +72,26 @@ public class RequestUtil {
         }
     }
 
-    public byte[] getResponseBody(String method, String url, String requestBody) throws IOException {
+    public Map<String, Object> getResponseBody(String method, String url, String requestBody) throws IOException {
         Map<String, String> request = splitUrl(url);
         request.put("body", requestBody);
         return findSuitableResponse(method, url, request);
     }
 
-    private byte[] findSuitableResponse(
+    private Map<String, Object> findSuitableResponse(
             String method,
             String url,
             Map<String, String> request) throws IOException {
+        Map<String, Object> response = new HashMap<>();
         switch (method) {
             case "GET":
                 return GetController.findGetMapping(url, request);
             case "POST":
                 return PostController.findPostMapping(url, request);
             default:
-                return "Null!".getBytes(StandardCharsets.UTF_8);
+                response.put("status", 404);
+                response.put("content", "Null!".getBytes(StandardCharsets.UTF_8));
+                return response;
         }
     }
 

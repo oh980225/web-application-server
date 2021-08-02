@@ -8,24 +8,34 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.Map;
 
 public class GetController {
-    public static byte[] findGetMapping(String url, Map<String, String> request) throws IOException {
+    public static Map<String, Object> findGetMapping(String url, Map<String, String> request) throws IOException {
+        Map<String, Object> response = new HashMap<>();
         RequestUtil requestUtil = new RequestUtil();
         Map<String, String> query = requestUtil.getQuery(request.get("params"));
 
         switch (request.get("path")) {
             case "/":
-                return getResponseByRootRequest();
+                response.put("status", 200);
+                response.put("content", getResponseByRootRequest());
+                break;
 //            case "/user/create":
 //                UserService.signUpUser(query);
 //                return getResponseSignUp(request);
             case "/users":
-                return getResponseUserList();
+                response.put("status", 200);
+                response.put("content", getResponseUserList());
+                break;
             default:
-                return Files.readAllBytes(new File("./webapp" + url).toPath());
+                response.put("status", 200);
+                response.put("content", Files.readAllBytes(new File("./webapp" + url).toPath()));
+                break;
         }
+
+        return response;
     }
 
     private static byte[] getResponseByRootRequest() {

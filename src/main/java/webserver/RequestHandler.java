@@ -36,10 +36,20 @@ public class RequestHandler extends Thread {
             String url = request.get("url");
             String requestBody = request.get("body");
 
-            byte[] body = requestUtil.getResponseBody(method, url, requestBody);
+            Map<String, Object> response = requestUtil.getResponseBody(method, url, requestBody);
+//            byte[] body = requestUtil.getResponseBody(method, url, requestBody);
 //            byte[] body = RequestUtil.getTest(bufferedReader);
-            response200Header(dos, body.length);
-            responseBody(dos, body);
+            int statusCode = (int) response.get("status");
+            byte [] content = (byte [])response.get("content");
+            switch (statusCode) {
+                case 302:
+                    response302(dos, content);
+                    break;
+                default:
+                    response200Header(dos, content.length);
+                    responseBody(dos, content);
+            }
+
         } catch (IOException e) {
             log.error(e.getMessage());
         }
@@ -59,6 +69,17 @@ public class RequestHandler extends Thread {
     private void responseBody(DataOutputStream dos, byte[] body) {
         try {
             dos.write(body, 0, body.length);
+            dos.flush();
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    private void response302(DataOutputStream dos, byte[] location) {
+        try {
+            dos.writeBytes("HTTP/1.1 302 Found \r\n");
+            dos.writeBytes("Location: ");
+            dos.write(location, 0, location.length);
             dos.flush();
         } catch (IOException e) {
             log.error(e.getMessage());
